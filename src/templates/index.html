@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowflake Documentation Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #2d3748;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            border-top: 5px solid #29b6f6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        header h1 {
+            color: #0288d1;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            resize: none;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        textarea:focus {
+            border-color: #29b6f6;
+            box-shadow: 0 0 0 3px rgba(41, 182, 246, 0.15);
+        }
+
+        button {
+            background: #0288d1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            background: #01579b;
+        }
+
+        button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .status-box {
+            display: none;
+            margin-top: 20px;
+            padding: 14px;
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 28px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            margin-top: 20px;
+        }
+
+        .answer-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1a202c;
+            white-space: pre-line;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>❄️ Snowflake Documentation Assistant</h1>
+            <p>Modular Hybrid Search (BM25 + Pinecone Vector Engine + FlashRank Reranking)</p>
+        </header>
+
+        <div class="input-group">
+            <textarea id="questionInput"
+                placeholder="Ask a question (e.g., 'What is Snowflake?' or 'Explain the COPY INTO command...')"></textarea>
+        </div>
+        <button id="submitBtn" onclick="submitQuery()">Ask Assistant</button>
+
+        <div id="statusBox" class="status-box">🤖 Processing search intents across RRF hybrid vector pipelines...</div>
+
+        <div id="resultContainer" class="result-container">
+            <div class="section-title">💡 Grounded Answer</div>
+            <div id="answerBox" class="answer-box"></div>
+        </div>
+    </div>
+
+    <script>
+        async function submitQuery() {
+            const questionInput = document.getElementById('questionInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const statusBox = document.getElementById('statusBox');
+            const resultContainer = document.getElementById('resultContainer');
+            const answerBox = document.getElementById('answerBox');
+
+            const question = questionInput.value.trim();
+            if (!question) return alert("Please type your question first!");
+
+            // Update UI to loading state
+            submitBtn.disabled = true;
+            statusBox.style.display = 'block';
+            resultContainer.style.display = 'none';
+
+            try {
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: question })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Render Data Out
+                answerBox.innerText = data.answer;
+                resultContainer.style.display = 'block';
+            } catch (error) {
+                console.error("Fetch Exception:", error);
+                alert("Error reaching the RAG engine pipeline!");
+            } finally {
+                submitBtn.disabled = false;
+                statusBox.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
