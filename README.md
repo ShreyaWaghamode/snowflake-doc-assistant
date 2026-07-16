@@ -42,7 +42,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
          └───────────┬───────────┘
                      ▼
          [ Stage 3: Ensemble (RRF) ]
-            (Merge Candidate Pools)
+            
                      │
                      ▼
          [ Stage 4: FlashRank Rerank ]
@@ -65,6 +65,8 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 └── indexer.py               # Document splitter, embedder, & Pinecone loader
 
 ```
+
+
 
 ---
 
