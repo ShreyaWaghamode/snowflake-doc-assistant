@@ -1,7 +1,4 @@
-
-
-
-# ❄️ Snowflake Docs  Assistant
+# ❄️ Snowflake Docs Assistant
 
 A production-grade, modular **Hybrid RAG search engine** engineered to deliver precise, hallucination-free technical answers directly from official Snowflake documentation.
 
@@ -11,24 +8,39 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 | Layer | Technologies Used |
 | --- | --- |
-| **Backend & API** | **FastAPI** (Uvicorn), **Pydantic** |
-| **RAG Orchestration** | **LangChain** (Chains, Document Transformers) |
-| **Generative LLM** | **OpenAI GPT-4o-mini** (Deterministic: $temperature = 0.0$) |
-| **Vector Index** | **Pinecone** & **OpenAI Embeddings** (`text-embedding-3-small`) |
-| **Hybrid Search** | **BM25 Retriever** (Exact Keyword Match) + **FlashRank** (Cross-Encoder Reranker) |
-| **Ingestion Pipeline** | **AsyncHtmlLoader**, **BeautifulSoup**, **Html2Text** |
-| **Frontend UI** | **HTML5**, **Java Script**, **CSS** |
+| **Backend & API** | **FastAPI** (Uvicorn), **Pydantic**<br> |
+| **RAG Orchestration** | **LangChain** (Chains, Document Transformers)
+
+ |
+| **Generative LLM** | **OpenAI GPT-4o-mini** (Deterministic: $temperature = 0.0$)
+
+ |
+| **Vector Index** | **Pinecone** & **OpenAI Embeddings** (`text-embedding-3-small`)
+
+ |
+| **Hybrid Search** | **BM25 Retriever** (Exact Keyword Match) + **FlashRank** (Cross-Encoder Reranker)
+
+ |
+| **Ingestion Pipeline** | **AsyncHtmlLoader**, **BeautifulSoup**, **Html2Text**<br> |
+| **Frontend UI** | **HTML5**, **JavaScript**, **CSS**<br> |
 
 ---
 
 ##  System Pillars
 
 * **Grounded Guardrails:** Programmed to output a strict, unified fallback message instead of guessing if documentation is missing.
+
+
 * **4-Stage Hybrid Search:** Blends **BM25 keyword search** and **Pinecone semantic search** via Reciprocal Rank Fusion (RRF), finalized by a **FlashRank Cross-Encoder Reranker** for precise context targeting.
+
+
 * **Separation of Concerns:** Clean separation of the crawler pipeline, prompt engineering layer, API orchestration layer, and static frontend UI.
+
+
 
 ---
 
+```text
                         [ USER QUERY ]
                               │
             ┌─────────────────┴─────────────────┐
@@ -39,18 +51,20 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
             │                                   │
             └─────────────────┬─────────────────┘
                               ▼
-                  [ STAGE 3: FUSION LAYER ]
+                 [ STAGE 3: FUSION LAYER ]
                      EnsembleRetriever
-               (Reciprocal Rank Fusion - RRF)
+              (Reciprocal Rank Fusion - RRF)
                               │
                               ▼
-                  [ STAGE 4: RERANKING LAYER ]
+                [ STAGE 4: RERANKING LAYER ]
                  ContextualCompressionRetriever
                     (FlashRank Cross-Encoder)
                               │
                               ▼
                  [ FINAL TOP-5 CONTEXT CHUNKS ]
                      (Passed to GPT-4o-Mini)
+
+```
 
 ---
 
@@ -85,8 +99,7 @@ pip install -r requirements.txt
 
 ```bash
 python scraper.py && python indexer.py
-
-```
+```[cite: 2, 5]
 
 ### 3. Launch Web UI
 
