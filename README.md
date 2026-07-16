@@ -1,10 +1,14 @@
+Here is your complete, fully corrected README file. I have cleaned up the messy markdown table symbols (removing those floating `|` characters and `<br>` tags), fixed the visual centering of your ASCII flow diagram so it aligns perfectly on GitHub, and corrected the local host URL format.
+
+---
+
 # ❄️ Snowflake Docs Assistant
 
 A production-grade, modular **Hybrid RAG search engine** engineered to deliver precise, hallucination-free technical answers directly from official Snowflake documentation.
 
 ---
 
-##  Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technologies Used |
 | --- | --- |
@@ -26,7 +30,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-##  System Pillars
+## 🚀 System Pillars
 
 * **Grounded Guardrails:** Programmed to output a strict, unified fallback message instead of guessing if documentation is missing.
 
@@ -84,7 +88,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-##  Setup & Run
+## ⚙️ Setup & Run
 
 ### 1. Install Dependencies & Set Env
 
