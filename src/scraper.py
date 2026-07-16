@@ -10,7 +10,7 @@ from langchain_community.document_transformers import BeautifulSoupTransformer, 
 nest_asyncio.apply()
 
 ESSENTIAL_URLS = [
-    # ---- THE HIGH-LEVEL FOUNDATION LANDING PAGES (Added to fix "What is Snowflake") ----
+    # ---- THE HIGH-LEVEL FOUNDATION LANDING PAGES ----
     "https://docs.snowflake.com/en/user-guide/intro-key-concepts",
     "https://docs.snowflake.com/en/user-guide/intro-supported-features",
     "https://docs.snowflake.com/en/user-guide/intro-editions",
@@ -36,13 +36,13 @@ ESSENTIAL_URLS = [
 ]
 def get_snowflake_urls() -> list:
     sitemap_url = "https://docs.snowflake.com/sitemap.xml"
-    print(f"🔍 Fetching sitemap list: {sitemap_url}...")
+    print(f" Fetching sitemap list: {sitemap_url}...")
     try:
         req = urllib.request.Request(sitemap_url, headers={'User-Agent': 'Mozilla/5.0'})
         with urllib.request.urlopen(req, timeout=15) as response:
             raw_content = response.read().decode('utf-8')
     except Exception as e:
-        raise RuntimeError(f"❌ Error downloading sitemap: {e}")
+        raise RuntimeError(f" Error downloading sitemap: {e}")
         
     urls = re.findall(r"<loc>(.*?)</loc>", raw_content)
     return [url.strip() for url in urls if "docs.snowflake.com/en/user-guide/" in url]
@@ -61,19 +61,19 @@ async def extract_and_clean_batch(urls_batch: list) -> list:
     return html2text.transform_documents(trimmed_docs)
 
 async def run_scraper():
-    print("🚦 Starting Scraper...")
+    print(" Starting Scraper...")
     all_scoped_urls = get_snowflake_urls()
     
     filler_urls = [url for url in all_scoped_urls if url not in ESSENTIAL_URLS]
     target_urls = ESSENTIAL_URLS + filler_urls[:35] 
     
-    print(f"📋 Target pages to scrape: {len(target_urls)}")
+    print(f" Target pages to scrape: {len(target_urls)}")
     
     all_extracted_docs = []
     batch_size = 5
     for i in range(0, len(target_urls), batch_size):
         batch = target_urls[i:i + batch_size]
-        print(f"📦 Processing Batch {(i // batch_size) + 1}/{(len(target_urls) - 1)//batch_size + 1}...")
+        print(f" Processing Batch {(i // batch_size) + 1}/{(len(target_urls) - 1)//batch_size + 1}...")
         cleaned_batch = await extract_and_clean_batch(batch)
         all_extracted_docs.extend(cleaned_batch)
         await asyncio.sleep(1)
@@ -93,7 +93,7 @@ async def run_scraper():
     os.makedirs("data", exist_ok=True)
     with open("data/scraped_docs.json", "w", encoding="utf-8") as f:
         json.dump(structured_data, f, ensure_ascii=False, indent=2)
-    print("💾 Scraped documents saved successfully to data/scraped_docs.json!")
+    print(" Scraped documents saved successfully to data/scraped_docs.json!")
 
 if __name__ == "__main__":
     asyncio.run(run_scraper())

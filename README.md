@@ -1,7 +1,7 @@
 
 
 
-# ❄️ Snowflake Docs RAG Assistant
+# ❄️ Snowflake Docs  Assistant
 
 A production-grade, modular **Hybrid RAG search engine** engineered to deliver precise, hallucination-free technical answers directly from official Snowflake documentation.
 
@@ -17,7 +17,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 | **Vector Index** | **Pinecone** & **OpenAI Embeddings** (`text-embedding-3-small`) |
 | **Hybrid Search** | **BM25 Retriever** (Exact Keyword Match) + **FlashRank** (Cross-Encoder Reranker) |
 | **Ingestion Pipeline** | **AsyncHtmlLoader**, **BeautifulSoup**, **Html2Text** |
-| **Frontend UI** | **HTML5**, **Java Script **, **CSS** |
+| **Frontend UI** | **HTML5**, **Java Script**, **CSS** |
 
 ---
 
@@ -29,26 +29,28 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-##  4-Stage Retrieval Flow
-
-```text
-               [ User Query ]
-                     │
-         ┌───────────┴───────────┐
-         ▼                       ▼
-   [ Stage 1: BM25 ]     [ Stage 2: Pinecone ]
-   (Exact Match Index)   (Semantic Vector Match)
-         │                       │
-         └───────────┬───────────┘
-                     ▼
-         [ Stage 3: Ensemble (RRF) ]
-            (Merge Candidate Pools)
-                     │
-                     ▼
-         [ Stage 4: FlashRank Rerank ]
-           (Top-5 Context Compression)
-
-```
+                        [ USER QUERY ]
+                              │
+            ┌─────────────────┴─────────────────┐
+            ▼                                   ▼
+   [ STAGE 1: LOCAL LAYER ]           [ STAGE 2: CLOUD LAYER ]
+     BM25 Sparse Retriever              Pinecone Vector Store
+      (Exact Keyword Match)            (Semantic Meaning Match)
+            │                                   │
+            └─────────────────┬─────────────────┘
+                              ▼
+                  [ STAGE 3: FUSION LAYER ]
+                     EnsembleRetriever
+               (Reciprocal Rank Fusion - RRF)
+                              │
+                              ▼
+                  [ STAGE 4: RERANKING LAYER ]
+                 ContextualCompressionRetriever
+                    (FlashRank Cross-Encoder)
+                              │
+                              ▼
+                 [ FINAL TOP-5 CONTEXT CHUNKS ]
+                     (Passed to GPT-4o-Mini)
 
 ---
 

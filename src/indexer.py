@@ -10,11 +10,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def run_indexing():
-    print("🚦 Starting Indexing Pipeline...")
+    print(" Starting Indexing Pipeline...")
     file_path = "data/scraped_docs.json"
     
     if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
-        print(f"❌ Error: Context file '{file_path}' is missing or empty!")
+        print(f" Error: Context file '{file_path}' is missing or empty!")
         sys.exit(1)
 
     with open(file_path, "r", encoding="utf-8") as f:
@@ -35,15 +35,15 @@ def run_indexing():
     chunks = text_splitter.split_documents(documents)
     
     if not os.getenv("OPENAI_API_KEY") or not os.getenv("PINECONE_API_KEY"):
-         print("❌ Missing API Keys inside .env config!")
+         print(" Missing API Keys inside .env config!")
          sys.exit(1)
 
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     index_name = os.getenv("PINECONE_INDEX_NAME")
     
-    print(f"🧠 Uploading {len(chunks)} chunks to Pinecone...")
+    print(f" Uploading {len(chunks)} chunks to Pinecone...")
     PineconeVectorStore.from_documents(chunks, embeddings, index_name=index_name)
-    print("✅ Vector Indexing Complete!")
+    print(" Vector Indexing Complete!")
 
 if __name__ == "__main__":
     run_indexing()
