@@ -13,7 +13,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 | --- | --- |
 | **Backend & API** | **FastAPI** (Uvicorn), **Pydantic** |
 | **RAG Orchestration** | **LangChain** (Chains, Document Transformers) |
-| **Generative LLM** | **OpenAI GPT-4o-mini** (Deterministic: $temperature = 0.0$) |
+| **Generative LLM** | **OpenAI GPT-4o-mini**  |
 | **Vector Index** | **Pinecone** & **OpenAI Embeddings** (`text-embedding-3-small`) |
 | **Hybrid Search** | **BM25 Retriever** (Exact Keyword Match) + **FlashRank** (Cross-Encoder Reranker) |
 | **Ingestion Pipeline** | **AsyncHtmlLoader**, **BeautifulSoup**, **Html2Text** |

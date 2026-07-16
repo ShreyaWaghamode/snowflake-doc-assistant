@@ -1,9 +1,5 @@
 # src/prompts.py
-"""
-Prompt Engineering Layer.
-Decoupling system prompts allows for independent tuning, 
-A/B evaluation, and cleaner version control history.
-"""
+
 
 SYSTEM_PROMPT = (
     "You are an expert AI Assistant specializing in Snowflake architecture.\n\n"
