@@ -52,7 +52,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ├── data/scraped_docs.json   # Clean, parsed target markdown database
@@ -93,4 +93,4 @@ uvicorn src.app:app --reload
 
 ```
 
-💻 Open **`[http://127.0.0.1:8000](http://127.0.0.1:8000)`** in your browser.
+ Open **`[http://127.0.0.1:8000](http://127.0.0.1:8000)`** in your browser.
