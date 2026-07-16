@@ -1,6 +1,5 @@
-Here is the updated, ultra-short **`README.md`** including a highly scannable **Tech Stack** breakdown:
 
----
+
 
 # ❄️ Snowflake Docs RAG Assistant
 
@@ -8,7 +7,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-## 🛠️ The Tech Stack
+##  Tech Stack
 
 | Layer | Technologies Used |
 | --- | --- |
@@ -18,19 +17,19 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 | **Vector Index** | **Pinecone** & **OpenAI Embeddings** (`text-embedding-3-small`) |
 | **Hybrid Search** | **BM25 Retriever** (Exact Keyword Match) + **FlashRank** (Cross-Encoder Reranker) |
 | **Ingestion Pipeline** | **AsyncHtmlLoader**, **BeautifulSoup**, **Html2Text** |
-| **Frontend UI** | **HTML5**, **Vanilla JS**, **CSS3 (Inter Font)** (Zero dependencies) |
+| **Frontend UI** | **HTML5**, **Java Script **, **CSS** |
 
 ---
 
-## 🎯 System Pillars
+##  System Pillars
 
-* **Zero-Hallucination Grounding:** Programmed to output a strict, unified fallback message instead of guessing if documentation is missing.
+* **Grounded Guardrails:** Programmed to output a strict, unified fallback message instead of guessing if documentation is missing.
 * **4-Stage Hybrid Search:** Blends **BM25 keyword search** and **Pinecone semantic search** via Reciprocal Rank Fusion (RRF), finalized by a **FlashRank Cross-Encoder Reranker** for precise context targeting.
 * **Separation of Concerns:** Clean separation of the crawler pipeline, prompt engineering layer, API orchestration layer, and static frontend UI.
 
 ---
 
-## 🏗️ 4-Stage Retrieval Flow
+##  4-Stage Retrieval Flow
 
 ```text
                [ User Query ]
@@ -69,7 +68,7 @@ A production-grade, modular **Hybrid RAG search engine** engineered to deliver p
 
 ---
 
-## ⚡ Setup & Run
+##  Setup & Run
 
 ### 1. Install Dependencies & Set Env
 

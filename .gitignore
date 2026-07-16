@@ -1,7 +1,7 @@
 # Environments
 .venv/
-venv/
-ENV/
+
+
 
 # Editor Settings
 .vscode/
